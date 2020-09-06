@@ -1,0 +1,101 @@
+/*TCIKET MODULE TO GATHER TICKET FUNCTIONS - TICKET MODEL to handle TICKET related db requests and data interactions*/
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: 'remotemysql.com',
+  user: 'CvRRmHdib0',
+  password: 'Vjgjs1DrYK',
+  database: 'CvRRmHdib0',
+});
+
+connection.connect();
+
+
+/*TICKET FUNCTIONS*/
+function createTicket(ticketObject) {
+  return new Promise((resolve, reject) => {
+    try{
+      const sql = `INSERT INTO Tickets(ticketNumber, title, ticketStatus, assignee, description, ticketBoardId) VALUES('${ticketObject.ticketNumber}', '${ticketObject.title}','${ticketObject.ticketStatus}','${ticketObject.ticketAssignee}', '${ticketObject.ticketDescr}',${ticketObject.boardID})`;
+      connection.query(sql, (err, result, fields) => {
+        if (err) throw err;
+        resolve(result)
+      })
+    }catch(error){
+      console.log(error);
+      reject(error);
+    }
+  });
+}
+
+
+function getTicketById(ticketId){
+  return new Promise((resolve, reject) => {
+    try{
+      const sql = `SELECT * FROM Tickets WHERE ticketId = ${ticketId}`;
+      connection.query(sql, (err, result, fields)=> {
+        if (err) throw err;
+        resolve(result)
+      })
+    }catch(error){
+      console.log(error);
+      reject(error);
+    }
+  });
+}
+
+
+function updateTicketStatus(ticketId, newStatus) {
+  return new Promise((resolve, reject) =>{
+    try{
+      const sql = `UPDATE Tickets SET ticketStatus= "${newStatus}" WHERE ticketId=${ticketId}`;
+      connection.query(sql, (err, result, fields) => {
+        if (err) throw err;
+        resolve(result);
+      });
+      } catch(error){
+          console.log(error);
+          reject(error);
+      }
+  });
+}
+
+
+function updateTicket(ticketObj) {
+  return new Promise((resolve, reject) =>{
+    try{
+      const sql = `UPDATE Tickets SET title="${ticketObj.ticketTitle}", ticketStatus="${ticketObj.ticketStatus}", assignee="${ticketObj.ticketAssignee}", description="${ticketObj.ticketDescr}" WHERE ticketId=${ticketObj.ticketId}`;
+      connection.query(sql, (err, result, fields) => {
+        if (err) throw err;
+        resolve(result);
+      });
+      }catch(error){
+          console.log(error);
+          reject(error);
+      }
+  });
+}
+
+
+function deleteTicket(ticketId){
+  return new Promise((resolve, reject) => {
+    try{
+      const sql = `DELETE from Tickets WHERE ticketId = ${ticketId}`;
+      connection.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        resolve(result)
+      })
+    }catch(err){
+      console.log(err);
+      reject(err);
+    }
+  });
+}
+
+
+module.exports = {
+  createTicket,
+  getTicketById,
+  updateTicketStatus,
+  updateTicket,
+  deleteTicket
+}

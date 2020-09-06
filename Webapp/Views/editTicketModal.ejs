@@ -1,0 +1,39 @@
+<div class="edit-ticket-modal-container">
+  <div class="create-ticket-modal-content">
+    <div class="create-ticket-modal-top-frame">
+      <div class="delete-ticket"><ion-icon name="trash-outline"></ion-icon></div>
+      <div class="create-ticket-close-modal">x</div>
+    </div>
+    <div class="create-ticket-modal-header">Edit ticket</div>
+    <div class="create-ticket-modal-form">
+      <form class="create-ticket-form" action="/updateTicket" method="post">
+            <input class="board-id-edit" type="hidden" name="boardId" required>
+            <input class="ticket-id-edit" type="hidden" name="ticketId" required>
+          <div class="form-row">
+            <label for="#ticket_title">Title</label>
+            <input class="title-edit" type="ticket-title" name="ticketTitle" id="ticket_title" required>
+          </div>
+          <div class="form-row">
+            <label for="ticket_status">Status</label>
+            <select class="ticket-status status-edit" name="ticketStatus" id="ticket_status" required>
+              <option value="TODO">To do</option>
+              <option value="In progress">In progress</option>
+              <option value="Testing">Testing</option>
+              <option value="Done">Done</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="ticket_assignee">Assignee</label>
+            <input class="assignee-edit" type="text" name="ticketAssignee" id="ticket_assignee" required>
+          </div>
+          <div class="form-row">
+            <label for="ticket_descr">Description</label>
+            <textarea class="descr-edit" name="ticketDescr" rows="15" cols="40" id="ticket_descr"></textarea>
+          </div>
+          <button class="update-ticket-button" type="submit">Save</button>
+      </form>
+    </div>
+    <div class="create-ticket-modal-footer"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,350 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header {
+  display: flex;
+  background-color: #3498db;
+  color: white;
+  padding: 30px;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-logo-icon {
+  flex:1;
+  text-align: left;
+  cursor: pointer;
+}
+
+.home-logo-icon ion-icon {
+  font-size: 64px;
+  color: white;
+}
+
+.delete-board-icon {
+  flex:1;
+  font-size: 32px;
+  text-align: right;
+  cursor: pointer;
+}
+
+.board-heading {
+  flex:1;
+  font-weight: 100;
+  font-size: 48px;
+  letter-spacing: 2px;
+}
+
+.user-menu {
+  flex:1;
+}
+
+.board-ticket-area-container {
+  min-height: 80vh;
+  height: auto;
+  background-color: #eee;
+  width: 100vw;
+  display: flex;
+}
+
+.board-col {
+  margin: 20px;
+  flex: 1;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: -3px 3px 15px 0px rgba(119,119,119,0.28);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  outline: none;
+}
+
+.board-col-header {
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: 300;
+  color: #3498db;
+  background-color: #fff;
+}
+
+.ticket {
+  height: 120px;
+  width: 350px;
+  border: 1px solid #3498db;
+  background-color:#fff ;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "ticket-id assignee edit"
+                       " task-title task-title task-title";
+  align-content: stretch;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: -3px 3px 5px 0px rgba(52,152,219,0.28);
+  transition: background-color 0.5s;
+  outline: none;
+}
+
+.ticket:hover {
+  cursor: grab;
+  background-color: #eaf6ff;
+}
+
+.ticket-id {
+  grid-area: ticket-id;
+  background-color: #3498db;
+  border-radius: 0 0 20px 0;
+}
+
+.ticket-id > p {
+  margin-top: 8%;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.ticket-assignee {
+  grid-area: assignee;
+}
+
+.ticket-assignee > p {
+  color: #777;
+  font-size: 120%;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 8%;
+}
+
+.ticket-title {
+  grid-area: task-title;
+}
+
+.ticket-title > p {
+  grid-area: task-title;
+  color: #3498db;
+  text-align: left;
+  padding: 7px;
+  margin-top: 4%;
+}
+
+.ticket-edit-btn {
+  grid-area: edit;
+  color: #3498DB;
+  font-size: 32px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 3px;
+}
+
+.draggable-source--is-dragging {
+  visibility: hidden;
+  transition: all 0.5s;
+}
+
+.draggable-container--over {
+  background-color: #eee;
+  transition: background-color 0.4s;
+}
+
+.draggable-container--over > .board-col-header {
+  background-color: #eee;
+  font-size: 160%;
+  transition: all 0.7s;
+}
+
+.create-ticket-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  bottom: 5%;
+  right: 5%;
+  padding: 15px;
+  border-radius: 50%;
+  background-color: #3498db;
+  color: #eee;
+  font-size: 6rem;
+  font-weight: 300;
+  transition: all, 0.4s;
+  z-index: 1;
+}
+
+.create-ticket-btn:hover {
+  background-color: #eee;
+  color: #3498db;
+  border: 2px solid #3498db;
+  cursor: pointer;
+}
+
+.create-ticket-modal-container {
+  display: none;
+  top: 0;
+  left:0;
+  position: absolute;
+  background-color: rgba(0,0,0,0.4);
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+}
+
+.edit-ticket-modal-container {
+  display: none;
+  top: 0;
+  left:0;
+  position: absolute;
+  background-color: rgba(0,0,0,0.4);
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+}
+
+.create-ticket-modal-content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 50px auto;
+  width: 50%;
+  height: 80vh;
+  background-color: #3498db;
+  border-radius: 5px;
+  z-index: 4;
+}
+
+.create-ticket-modal-top-frame{
+  flex:1;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+
+}
+
+.delete-ticket,
+.delete-board {
+  margin-left: 30px;
+  margin-top:10px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.delete-ticket > ion-icon:hover {
+  font-size: 26px;
+}
+
+.create-ticket-close-modal {
+  cursor: pointer;
+  margin-right: 30px;
+  color: #fff;
+  background-color: #3498db;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.create-ticket-close-modal:hover {
+  font-size: 26px;
+}
+
+.create-ticket-modal-header {
+  background-color: #eee;
+  flex:1;
+  color: #777;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.create-ticket-modal-form {
+  flex:10;
+  background-color: #eee;
+}
+
+.create-ticket-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-ticket-modal-footer {
+  flex:0;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
+  margin-bottom: 30px;
+  font-size: 150%;
+  color:  #3498DB;
+}
+
+.form-row label {
+  display: inline-block;
+  margin-right: 85px;
+}
+
+.form-row input, select, textarea {
+  box-shadow: none;
+  margin-right: 0px;
+  width: 60%;
+  height: 50px;
+  border: 1px solid;
+  border-color: #3498DB;
+  border-width: thin;
+  outline: none;
+  /* outline-color: #3498DB ; */
+  box-shadow: none;
+  border-radius: 5px;
+  font-size: 70%;
+  padding: 10px;
+  color:  #777;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 3px;
+}
+
+.form-row textarea {
+  height: 150px;
+  resize: none;
+}
+
+.create-ticket-button,
+.update-ticket-button {
+  margin: 20px auto;
+  display: block;
+  width: 60%;
+  height: 75px;
+  background-color: #3498DB;
+  color: #fff;
+  outline: none;
+  border: solid 1px transparent;
+  border-radius: 5px;
+  font-size: 140%;
+  letter-spacing: 3px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 3 00;
+  cursor: pointer;
+  box-shadow: 0 3px 5px #ddd;
+  transition: border 0.4s, color 0.4s, background-color 0.4s;
+}
+
+.create-ticket-button:hover {
+  color: #3498DB;
+  background-color: #eee;
+  border: 1px solid #3498DB;
+}

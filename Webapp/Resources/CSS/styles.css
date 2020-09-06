@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+header{
+  background-color: #3498db;
+  height: 100vh;
+  position: relative;
+}
+
+section{
+  max-width: 1140px;
+  margin: auto;
+}
+
+h1 {
+  color: #fff;
+  font-weight: 100;
+  font-size:300%;
+  margin-left: auto;
+  margin-right: 0;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #fff;
+  font-weight: 400;
+  font-size: 90%;
+  letter-spacing: 3px;
+}
+
+footer {
+  height: 200px;
+  background-color: #3498DB;
+}
+
+.icon-logo {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  color: #fff;
+  top: 20px;
+  left: 20px;
+}
+
+.welcome-text {
+  width: 60%;
+  text-align: right;
+  position: absolute;
+  left: 20%;
+  top: 40%;
+}
+
+.create-board-btn {
+  position: absolute;
+  left: 20%;
+  top: 70%;
+  background-color: white;
+  padding: 20px 75px;
+  font-size: 120%;
+  color: #3498db;
+  border-radius: 3px;
+  text-decoration: none;
+  box-shadow: 0 2px 2px #efefef;
+}
+
+.create-board-btn:hover,
+.create-board-btn:active{
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.header-img{
+  position: absolute;
+  height: 100vh;
+  width: 40%;
+  background-size: cover;
+}
+
+.create-board-section{
+  height: 100vh;
+}
+
+.form_box_heading {
+  color: #777;
+  font-size: 150%;
+  font-weight: 700;
+  text-align: center;
+  padding-top: 100px;
+  margin-bottom: 100px;
+}
+
+.form-row {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 50px;
+  font-size: 150%;
+  color:  #3498DB;
+  text-align: right;
+}
+
+.form-row label {
+  display: inline-block;
+  margin-right: 85px;
+}
+
+.form-row input {
+  box-shadow: none;
+  margin-right: 0px;
+  width: 50%;
+  height: 50px;
+  border: 1px solid;
+  border-color: #3498DB;
+  border-width: thin;
+  outline: none;
+  box-shadow: none;
+  border-radius: 5px;
+  font-size: 70%;
+  padding: 10px;
+  color:  #777;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 3px;
+}
+
+.new-board-form-btn {
+  margin: auto;
+  display: block;
+  width: 50%;
+  height: 75px;
+  background-color: #3498DB;
+  color: #fff;
+  outline: none;
+  border: solid 1px transparent;
+  border-radius: 5px;
+  font-size: 120%;
+  letter-spacing: 3px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 3 00;
+  cursor: pointer;
+  box-shadow: 0 3px 5px #ddd;
+  transition: border 0.4s, color 0.4s, background-color 0.4s;
+}
+
+.new-board-form-btn:hover {
+  color: #3498DB;
+  background-color: #eee;
+  border: 1px solid #3498DB;
+}
