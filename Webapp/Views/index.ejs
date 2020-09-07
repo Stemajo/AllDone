@@ -28,11 +28,11 @@
       <form action="/createBoard" class="create_board_form" method="post">
         <div class="form-row">
           <label for="board_name">Board name: </label>
-          <input type="text" name="boardName" id="board_name">
+          <input type="text" name="boardName" id="board_name" required>
         </div>
         <div class="form-row">
           <label for="ticket_prefix">Ticket prefix:</label>
-          <input type="text" name="ticketPrefix" id="ticket_prefix" >
+          <input type="text" name="ticketPrefix" id="ticket_prefix" maxlength="5" required>
         </div>
         <button class="new-board-form-btn" type="submit">Create board</button>
       </form>
