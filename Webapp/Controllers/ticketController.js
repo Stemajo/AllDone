@@ -3,20 +3,16 @@ const Board = require('../Models/board');
 
 
 const createTicket = (req, res) => {
-  const newTicketObj = {
+  const newTicketData = {
       boardID: req.body.boardId,
       title: req.body.ticketTitle,
       ticketStatus: req.body.ticketStatus,
       ticketAssignee: req.body.ticketAssignee,
-      ticketDescr: req.body.ticketDescr
+      ticketDescr: req.body.ticketDescr,
   }
 
-  Board.getBoardObj(req.body.boardId)
-      .then((boardObj) => {
-          newTicketObj.ticketNumber = boardObj.boardTicketPrefix + "-xxx";
-      })
-      .then(() => Ticket.createTicket(newTicketObj))
-      .then(() => res.redirect(`/board/${newTicketObj.boardID}`))
+      Ticket.createTicket(newTicketData)
+      .then(() => res.redirect(`/board/${newTicketData.boardID}`))
       .catch((error) => console.log(error));
 }
 
@@ -45,6 +41,7 @@ const getTicket = (req, res) => {
   .then((ticket) => res.send(ticket))
   .catch((error) => console.log(error));
 }
+
 
 const deleteTicket = (req, res) => {
   Ticket.deleteTicket(req.body.ticketId)

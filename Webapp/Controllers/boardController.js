@@ -2,12 +2,25 @@ const Board = require('../Models/board');
 
 
 const getBoard = (req, res) => {
-      Board.getBoardObj(req.params.boardID).then((boardObj) => {
-        Board.renderBoard(boardObj, res);
-      }).catch((error) => {
-        console.log(error);
-      });
+      let boardObj = {};
+      Board.getBoardObj(req.params.boardID)
+      .then((obj) => {
+        boardObj = obj;
+        Board.getBoardTickets(boardObj.boardID)
+        .then((boardTickets) => {
+          boardObj.boardTickets = boardTickets;
+          res.render('boardView', {
+              boardId: boardObj.boardID,
+              boardName: boardObj.boardName,
+              boardTicketPrefix: boardObj.boardTicketPrefix,
+              boardTickets: boardObj.boardTickets
+              });
+        }).catch((error) => {
+          console.log(error);
+        });
+      })
   }
+
 
 const createBoard = (req, res) => {
         Board.createBoard(req.body.boardName, req.body.ticketPrefix).then( (boardID) => {

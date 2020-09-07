@@ -4,16 +4,21 @@ const connection = require('./db').connection;
 /*TICKET FUNCTIONS*/
 function createTicket(ticketObject) {
   return new Promise((resolve, reject) => {
-    try{
-      const sql = `INSERT INTO Tickets(ticketNumber, title, ticketStatus, assignee, description, ticketBoardId) VALUES('${ticketObject.ticketNumber}', '${ticketObject.title}','${ticketObject.ticketStatus}','${ticketObject.ticketAssignee}', '${ticketObject.ticketDescr}',${ticketObject.boardID})`;
-      connection.query(sql, (err, result, fields) => {
-        if (err) throw err;
-        resolve(result)
-      })
-    }catch(error){
+    getNextTicketNumber(ticketObject.boardID)
+    .then((ticketNumber) => {
+      try{
+        const sql = `INSERT INTO Tickets(ticketNumber, title, ticketStatus, assignee, description, ticketBoardId) VALUES('${ticketNumber}', '${ticketObject.title}','${ticketObject.ticketStatus}','${ticketObject.ticketAssignee}', '${ticketObject.ticketDescr}',${ticketObject.boardID})`;
+        connection.query(sql, (err, result, fields) => {
+          if (err) throw err;
+          resolve(result)
+        })
+      }catch(error){
+        console.log(error);
+        reject(error);
+        }
+    }).catch((error) => {
       console.log(error);
-      reject(error);
-    }
+    });
   });
 }
 
@@ -88,4 +93,21 @@ module.exports = {
   updateTicketStatus,
   updateTicket,
   deleteTicket
+}
+
+
+//Private methods
+function getNextTicketNumber(boardId) {
+  return new Promise((resolve, reject) => {
+    try{
+      const sql = `SELECT MAX(ticketNumber) AS currentMax from Tickets WHERE ticketBoardId = ${boardId}`;
+      connection.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        resolve(result[0].currentMax + 1) //increase by 1 compared to current biggest ticketNumber on selected board.
+      })
+    }catch(err){
+      console.log(err);
+      reject(err);
+    }
+  });
 }

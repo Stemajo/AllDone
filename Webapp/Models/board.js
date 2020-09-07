@@ -23,11 +23,13 @@ function createBoard(boardName, ticketPrefix) {
 function renderBoard(boardObj, res) {
     const boardName = boardObj.boardName;
     const boardId = boardObj.boardID;
+    const boardTicketPrefix = boardObj.boardTicketPrefix;
     getBoardTickets(boardObj.boardID).then((boardTickets) => {
       res.render('boardView', {
           boardId,
           boardName,
-          boardTickets
+          boardTickets,
+          boardTicketPrefix
           });
     });
   }
@@ -57,7 +59,7 @@ function getBoardTickets(boardID) {
       const sql = `SELECT * FROM Tickets WHERE ticketBoardId = ${boardID}`;
       connection.query(sql, (err, result, fields)=> {
           if (err) throw err;
-          resolve(result)
+          resolve(result);
       })
     }catch(error){
       console.log(error);
