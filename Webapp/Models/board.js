@@ -1,15 +1,6 @@
 /*BOARD MODULE TO GATHER BOARD FUNCTIONS - BOARD MODEL to handle BOARD related db requests and data interactions*/
-const mysql = require('mysql');
 const ejs = require('ejs');
-
-const connection = mysql.createConnection({
-  host: 'remotemysql.com',
-  user: 'CvRRmHdib0',
-  password: 'Vjgjs1DrYK',
-  database: 'CvRRmHdib0',
-});
-
-connection.connect();
+const connection = require('./db').connection;
 
 
 function createBoard(boardName, ticketPrefix) {

@@ -31,9 +31,18 @@ body, html {
 
 .delete-board-icon {
   flex:1;
-  font-size: 32px;
+  font-size: 24px;
   text-align: right;
   cursor: pointer;
+}
+
+.delete-board-icon > p {
+  font-size: 18px;
+  display: inline;
+}
+
+.delete-board-icon ion-icon {
+  margin: 0 10px;
 }
 
 .board-heading {

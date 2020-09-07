@@ -1,15 +1,5 @@
 /*TCIKET MODULE TO GATHER TICKET FUNCTIONS - TICKET MODEL to handle TICKET related db requests and data interactions*/
-const mysql = require('mysql');
-
-const connection = mysql.createConnection({
-  host: 'remotemysql.com',
-  user: 'CvRRmHdib0',
-  password: 'Vjgjs1DrYK',
-  database: 'CvRRmHdib0',
-});
-
-connection.connect();
-
+const connection = require('./db').connection;
 
 /*TICKET FUNCTIONS*/
 function createTicket(ticketObject) {
