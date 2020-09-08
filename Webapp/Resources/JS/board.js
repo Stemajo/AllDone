@@ -44,8 +44,7 @@ function getTicket(ticketId) {
   return new Promise((resolve, reject) => {
     try {
       var xhr = new XMLHttpRequest();
-      xhr.open("POST","/getTicket", true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.open('GET',`/getTicket/${ticketId}`, true);
       xhr.responseType = 'json';
       xhr.onload = () => {
           let status = xhr.status;
@@ -55,9 +54,7 @@ function getTicket(ticketId) {
             reject(status);
           }
         }
-      xhr.send(JSON.stringify({
-          ticketId
-      }));
+      xhr.send();
     }catch(err){
       console.log(err);
       reject(err);

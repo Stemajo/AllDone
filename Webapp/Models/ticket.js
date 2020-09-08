@@ -7,7 +7,6 @@ function createTicket(ticketObject) {
     getNextTicketNumber(ticketObject.boardID)
     .then((ticketNumber) => {
       try{
-        console.log(ticketObject);
         const sql = `INSERT INTO Tickets(ticketNumber, title, ticketStatus, assignee, description, ticketBoardId) VALUES('${ticketNumber}', '${ticketObject.title}','${ticketObject.ticketStatus}','${ticketObject.ticketAssignee}', '${ticketObject.ticketDescr}','${ticketObject.boardID}')`;
         connection.query(sql, (err, result, fields) => {
           if (err) throw err;

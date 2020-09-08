@@ -3,8 +3,8 @@ const Draggable = require('@shopify/draggable');
 
 var selectedTicketId;
 var currentBoardId = window.location.href.substring(window.location.href.lastIndexOf('/')+1);
-console.log("Current Board: ", currentBoardId);
 
+//Make all ticket items on board-col Sortable objects.
 const draggableTicket = new Draggable.Sortable(document.querySelectorAll('.board-col'), {
   draggable: '.ticket',
   swapAnimation: {
@@ -16,7 +16,7 @@ const draggableTicket = new Draggable.Sortable(document.querySelectorAll('.board
     delay: 150
 });
 
-
+//Drag and drop event handling
 draggableTicket.on('drag:start', () => console.log(draggableTicket.getOptions));
 draggableTicket.on('drag:move', () => console.log('drag:move'));
 draggableTicket.on('drag:stop', (event) => {
@@ -40,71 +40,54 @@ function updateTicketStatus (ticketId, newColumnId) {
   }));
 }
 
-function deleteBoard (boardId) {
+
+function getTicket(ticketId) {
   return new Promise((resolve, reject) => {
     try {
       var xhr = new XMLHttpRequest();
-      xhr.open("POST","/deleteBoard", true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.open('GET',`/getTicket/${ticketId}`, true);
+      // xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.responseType = 'json';
       xhr.onload = () => {
           let status = xhr.status;
           if(status==200) {
-            console.log('Success: Board deleted');
-            resolve(status);
-          }else {
-            console.log("Failed with response code: ", status);
-            reject(status);
-          }
-        }
-
-      xhr.send(JSON.stringify({
-          boardId
-      }));
-    }catch(err){
-      console.log("Failed with response code: ", status);
-      reject(status);
-    }
-  });
-};
-
-// function updateTicket(ticketObj){
-//   var xhr = new XMLHttpRequest();
-//   xhr.open("POST","/updateTicket", true);
-//   xhr.setRequestHeader('Content-Type', 'application/json');
-//   xhr.send(JSON.stringify({
-//       ticketObj
-//   }));
-// }
-
-function getTicket (ticketId) {
-  return new Promise((resolve, reject) => {
-    try {
-      console.log("getTicket initiated with ticketId: ", ticketId);
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST","/getTicket", true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.responseType = 'json';
-      xhr.onload = () => {
-          let status = xhr.status;
-          if(status==200) {
-            console.log('Success: ', xhr.response[0]);
             resolve(xhr.response[0]);
           }else {
-            console.log("Failed with response code: ", status);
             reject(status);
           }
         }
-
-      xhr.send(JSON.stringify({
-          ticketId
-      }));
+      xhr.send();
     }catch(err){
       console.log(err);
       reject(err);
     }
   })
 }
+
+// function getTicket(ticketId) {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       var xhr = new XMLHttpRequest();
+//       xhr.open("POST","/getTicket", true);
+//       xhr.setRequestHeader('Content-Type', 'application/json');
+//       xhr.responseType = 'json';
+//       xhr.onload = () => {
+//           let status = xhr.status;
+//           if(status==200) {
+//             resolve(xhr.response[0]);
+//           }else {
+//             reject(status);
+//           }
+//         }
+//       xhr.send(JSON.stringify({
+//           ticketId
+//       }));
+//     }catch(err){
+//       console.log(err);
+//       reject(err);
+//     }
+//   })
+// }
 
 
 function sendDeleteTicketReq(ticketId, ticketBoardId) {
@@ -133,6 +116,35 @@ function sendDeleteTicketReq(ticketId, ticketBoardId) {
   });
 };
 
+
+function deleteBoard (boardId) {
+  return new Promise((resolve, reject) => {
+    try {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST","/deleteBoard", true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.responseType = 'json';
+      xhr.onload = () => {
+          let status = xhr.status;
+          if(status==200) {
+            resolve(status);
+          }else {
+            console.log("Failed with response code: ", status);
+            reject(status);
+          }
+        }
+
+      xhr.send(JSON.stringify({
+          boardId
+      }));
+    }catch(err){
+      console.log("Failed with response code: ", status);
+      reject(status);
+    }
+  });
+};
+
+
 //Function to fill modal window for ticket edit
 function fillEditTicketForm(ticketObj){
     console.log("TICKET FOR EDIT: ", ticketObj);
@@ -145,12 +157,7 @@ function fillEditTicketForm(ticketObj){
 }
 
 
-function setModalTicketStatus(ticketStatus) {
-  document.getElementById('ticket_status').value = ticketStatus;
-}
-
-
-/* when modal to create new ticket is opened */
+/* when modal is opened to create new ticket*/
 document.querySelector(".create-ticket-btn").addEventListener('click', () => {
     window.scrollTo(0, 0);
     document.querySelector(".create-ticket-modal-container").style.display = 'block';
@@ -168,6 +175,7 @@ document.querySelectorAll(".create-ticket-close-modal").forEach((obj) => { obj.a
 });
 
 
+//Add event listeners to all buttons to detect when ticket edit is initiated.
 document.querySelectorAll('.ticket-edit-btn').forEach((btn) => {
     btn.addEventListener('click', (event) => {
       var editTicket = event.path[5].id;
@@ -185,6 +193,7 @@ document.querySelectorAll('.ticket-edit-btn').forEach((btn) => {
 });
 
 
+//Detect when delete ticket button is pressed and reload page after deletion.
 document.querySelector('.delete-ticket').addEventListener('click', (event) => {
   console.log("Delete ticket clicked: ", event, selectedTicketId);
    getTicket(selectedTicketId).then((ticketObj) => {
@@ -194,8 +203,8 @@ document.querySelector('.delete-ticket').addEventListener('click', (event) => {
   });
 
 
+//Detect when delete board button pressed, if successful redirect to Home.
 document.querySelector('.delete-board-icon').addEventListener('click', (event)=>{
-      console.log("Board delete triggered");
       if(currentBoardId){
         deleteBoard(currentBoardId).then((status)=> {
           console.log(status);
@@ -205,13 +214,6 @@ document.querySelector('.delete-board-icon').addEventListener('click', (event)=>
         });
       }
 })
-
-
-/* when modal is closed from x*/
-// document.querySelector(".modal-container").addEventListener('click', function() {
-//     document.querySelector(".modal-container").style.display = 'none';
-//     document.querySelector("body").style.overflow = 'visible';
-// });
 
 },{"@shopify/draggable":2}],2:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {

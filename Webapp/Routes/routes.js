@@ -19,7 +19,7 @@ router.post('/updateTicketStatus', ticketController.updateTicketStatus);
 
 router.post('/updateTicket', ticketController.updateTicket);
 
-router.post('/getTicket', ticketController.getTicket);
+router.get('/getTicket/:ticketId', ticketController.getTicket);
 
 router.post('/deleteTicket', ticketController.deleteTicket);
 

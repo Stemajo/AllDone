@@ -30,7 +30,7 @@ const updateTicket = (req, res) => {
 
 
 const getTicket = (req, res) => {
-  Ticket.getTicketById(req.body.ticketId)
+  Ticket.getTicketById(req.params.ticketId)
   .then((ticket) => res.send(ticket))
   .catch((error) => console.log(error));
 }
