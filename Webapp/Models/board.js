@@ -1,15 +1,19 @@
 /*BOARD MODULE TO GATHER BOARD FUNCTIONS - BOARD MODEL to handle BOARD related db requests and data interactions*/
 const ejs = require('ejs');
 const connection = require('./db').connection;
+const cryptoRandomString = require('crypto-random-string');
+
+
 
 
 function createBoard(boardName, ticketPrefix) {
   return new Promise( (resolve, reject) => {
     try {
-      const sql = `INSERT INTO Boards(boardName, boardTicketPrefix) VALUES('${boardName}', '${ticketPrefix}');`
+      const boardID = cryptoRandomString({length: 10}); //create random string for boardID
+      const sql = `INSERT INTO Boards( boardID, boardName, boardTicketPrefix) VALUES('${boardID}', '${boardName}', '${ticketPrefix}');`
       connection.query(sql, function (err, result) {
-        if (err) throw err;
-        resolve(result.insertId); // Return boardID from DB;
+          if (err) throw err;
+          resolve(boardID); // Return boardID to render board;
       });
     }catch(err){
       console.log(err);
@@ -39,7 +43,7 @@ function renderBoard(boardObj, res) {
 function getBoardObj(boardId) {
   return new Promise((resolve, reject) =>{
     try{
-      const sql = `SELECT * FROM Boards WHERE boardID=${boardId}`;
+      const sql = `SELECT * FROM Boards WHERE boardID='${boardId}'`;
       connection.query(sql, (err, result, fields) => {
         if (err) throw err;
         const boardObj = result[0];
@@ -56,7 +60,7 @@ function getBoardObj(boardId) {
 function getBoardTickets(boardID) {
   return new Promise((resolve, reject) => {
     try{
-      const sql = `SELECT * FROM Tickets WHERE ticketBoardId = ${boardID}`;
+      const sql = `SELECT * FROM Tickets WHERE ticketBoardId = '${boardID}'`;
       connection.query(sql, (err, result, fields)=> {
           if (err) throw err;
           resolve(result);
@@ -72,7 +76,7 @@ function getBoardTickets(boardID) {
 function deleteBoard(boardId){
   return new Promise((resolve, reject) => {
     try{
-      const sql = `DELETE from Boards WHERE boardID=${boardId}`;
+      const sql = `DELETE from Boards WHERE boardID='${boardId}'`;
       connection.query(sql, (err, result, fields) => {
         if(err) throw err;
         resolve(result)

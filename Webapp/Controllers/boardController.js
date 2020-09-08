@@ -23,7 +23,7 @@ const getBoard = (req, res) => {
 
 
 const createBoard = (req, res) => {
-        Board.createBoard(req.body.boardName, req.body.ticketPrefix).then( (boardID) => {
+        Board.createBoard(req.body.boardName, req.body.ticketPrefix).then((boardID) => {
         res.redirect(`/board/${boardID}`);
         }).catch((error) => {
           console.log(error);

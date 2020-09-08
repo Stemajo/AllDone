@@ -11,34 +11,34 @@
 <body>
   <%- include('partials/boardViewHeader')-%>
   <div class="board-ticket-area-container">
-    <div class="board-col" id="col-1">
+    <div class="board-col" id="1">
       <div class=board-col-header>To do</div>
       <% boardTickets.forEach((ticket) => { %>
-        <% if(ticket.ticketStatus === 'TODO'){ %>
+        <% if(ticket.ticketStatus === 1){ %>
           <%- include('./partials/ticket', {ticket})-%>
         <%}%>
       <%})%>
     </div>
-    <div class="board-col" id="col-2">
+    <div class="board-col" id="2">
       <div class=board-col-header>In progress</div>
       <% boardTickets.forEach((ticket) => { %>
-        <% if(ticket.ticketStatus === 'In progress'){ %>
+        <% if(ticket.ticketStatus === 2){ %>
           <%- include('./partials/ticket', {ticket})-%>
         <%}%>
       <%})%>
     </div>
-    <div class="board-col" id="col-3">
+    <div class="board-col" id="3">
       <div class=board-col-header>Testing</div>
       <% boardTickets.forEach((ticket) => { %>
-        <% if(ticket.ticketStatus === 'Testing'){ %>
+        <% if(ticket.ticketStatus === 3){ %>
           <%- include('./partials/ticket', {ticket})-%>
         <%}%>
       <%})%>
     </div>
-    <div class="board-col" id="col-4">
+    <div class="board-col" id="4">
       <div class=board-col-header>Done</div>
       <% boardTickets.forEach((ticket) => { %>
-        <% if(ticket.ticketStatus === 'Done'){ %>
+        <% if(ticket.ticketStatus === 4){ %>
           <%- include('./partials/ticket', {ticket})-%>
         <%}%>
       <%})%>

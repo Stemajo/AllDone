@@ -18,14 +18,7 @@ const createTicket = (req, res) => {
 
 
 const updateTicketStatus = (req, res) => {
-  const statusMap = {
-     "col-1":"TODO",
-     "col-2":"In progress",
-     "col-3":"Testing",
-     "col-4":"Done"
-  }
-
-  Ticket.updateTicketStatus(req.body.ticketId, statusMap[req.body.newColumnId])
+  Ticket.updateTicketStatus(req.body.ticketId, req.body.newColumnId)
   .then(() =>res.status(200).send())
   .catch((error) => console.log(error));
 }

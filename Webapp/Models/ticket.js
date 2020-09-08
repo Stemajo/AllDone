@@ -7,7 +7,8 @@ function createTicket(ticketObject) {
     getNextTicketNumber(ticketObject.boardID)
     .then((ticketNumber) => {
       try{
-        const sql = `INSERT INTO Tickets(ticketNumber, title, ticketStatus, assignee, description, ticketBoardId) VALUES('${ticketNumber}', '${ticketObject.title}','${ticketObject.ticketStatus}','${ticketObject.ticketAssignee}', '${ticketObject.ticketDescr}',${ticketObject.boardID})`;
+        console.log(ticketObject);
+        const sql = `INSERT INTO Tickets(ticketNumber, title, ticketStatus, assignee, description, ticketBoardId) VALUES('${ticketNumber}', '${ticketObject.title}','${ticketObject.ticketStatus}','${ticketObject.ticketAssignee}', '${ticketObject.ticketDescr}','${ticketObject.boardID}')`;
         connection.query(sql, (err, result, fields) => {
           if (err) throw err;
           resolve(result)
@@ -42,7 +43,7 @@ function getTicketById(ticketId){
 function updateTicketStatus(ticketId, newStatus) {
   return new Promise((resolve, reject) =>{
     try{
-      const sql = `UPDATE Tickets SET ticketStatus= "${newStatus}" WHERE ticketId=${ticketId}`;
+      const sql = `UPDATE Tickets SET ticketStatus= '${newStatus}' WHERE ticketId=${ticketId}`;
       connection.query(sql, (err, result, fields) => {
         if (err) throw err;
         resolve(result);
@@ -58,7 +59,7 @@ function updateTicketStatus(ticketId, newStatus) {
 function updateTicket(ticketObj) {
   return new Promise((resolve, reject) =>{
     try{
-      const sql = `UPDATE Tickets SET title="${ticketObj.ticketTitle}", ticketStatus="${ticketObj.ticketStatus}", assignee="${ticketObj.ticketAssignee}", description="${ticketObj.ticketDescr}" WHERE ticketId=${ticketObj.ticketId}`;
+      const sql = `UPDATE Tickets SET title='${ticketObj.ticketTitle}', ticketStatus='${ticketObj.ticketStatus}', assignee='${ticketObj.ticketAssignee}', description='${ticketObj.ticketDescr}' WHERE ticketId=${ticketObj.ticketId}`;
       connection.query(sql, (err, result, fields) => {
         if (err) throw err;
         resolve(result);
@@ -100,7 +101,7 @@ module.exports = {
 function getNextTicketNumber(boardId) {
   return new Promise((resolve, reject) => {
     try{
-      const sql = `SELECT MAX(ticketNumber) AS currentMax from Tickets WHERE ticketBoardId = ${boardId}`;
+      const sql = `SELECT MAX(ticketNumber) AS currentMax from Tickets WHERE ticketBoardId ='${boardId}'`;
       connection.query(sql, (err, result, fields) => {
         if(err) throw err;
         resolve(result[0].currentMax + 1) //increase by 1 compared to current biggest ticketNumber on selected board.
